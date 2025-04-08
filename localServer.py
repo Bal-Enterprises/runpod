@@ -6,7 +6,9 @@ port = os.environ["BAL_ENT_SERVER_PORT"]
 
 
 class MyHandler(BaseHTTPRequestHandler):
+
     def do_GET(self):
+        print("do_get")
         if self.path == "/get":
             self.send_response(200)
             self.send_header("Content-type", "text/html")
