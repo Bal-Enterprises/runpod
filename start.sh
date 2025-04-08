@@ -1,0 +1,1 @@
+python3 ./localServer.py & python3 ./rp_handler.py

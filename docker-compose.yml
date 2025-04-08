@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  server:
+    build: .
+    environment:
+      - BAL_ENT_SERVER_URL=http://localhost
+      - BAL_ENT_SERVER_PORT=8000 
+    ports:
+      - "8000:8000"
