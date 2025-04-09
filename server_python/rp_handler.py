@@ -63,12 +63,8 @@ def queryModel(prompt):
     return completion.choices[0].message
 
 def handler(event):
-    input = event["input"]
-    instruction = input.get("instruction")
-    seconds = input.get("seconds", 0)
-
-
-    result = queryModel("Hello, how are you?")
+    input = event["message"]
+    result = queryModel(input)
     return result
 
 
