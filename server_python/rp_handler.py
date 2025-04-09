@@ -63,9 +63,18 @@ def queryModel(prompt):
     return completion.choices[0].message
 
 def handler(event):
-    input = event["message"]
-    result = queryModel(input)
-    return result
+    
+    input = event['input']
+    instruction = input.get('instruction')
+    
+    if instruction == "chat":
+        if "message" in input.keys():
+            print("got chat instruction with message len of ", len(input['message']))           
+            result = queryModel(input['message'])
+            print("query model, returning results")
+            return result
+        else:
+            print("got chat instruction, but no message")
 
 
     result = instruction.replace(instruction.split()[0], "created", 1)
