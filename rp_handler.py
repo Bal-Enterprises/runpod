@@ -22,7 +22,7 @@ def sendGetRequest():
 def sendPostRequest():
     # URL to send the POST request to
     try:
-        fullpath = f"{url}:{port}/post"
+        fullpath = f"{url}:{port}/get"
         data = {"key1": "value1", "key2": "value2"}
 
         headers = {
@@ -46,7 +46,7 @@ def handler(event):
     input = event["input"]
     instruction = input.get("instruction")
     seconds = input.get("seconds", 0)
-    print("port: ",port)
+
     # Placeholder for a task; replace with image or text generation logic as needed
     time.sleep(seconds)
     if instruction == "GET":
