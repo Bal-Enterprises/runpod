@@ -2,10 +2,12 @@ import runpod
 import time
 import requests
 import os
+from openai import OpenAI
 
 url = os.environ["BAL_ENT_SERVER_URL"]
 port = os.environ["BAL_ENT_SERVER_PORT"]
-
+api_key = os.environ["BAL_ENT_API_KEY"]
+model_version = os.environ["BAL_ENT_MODEL"]
 
 def sendGetRequest():
     try:
@@ -42,20 +44,33 @@ def sendPostRequest():
         print(f"Request failed with status code: {response.status_code}")
 
 
+def queryModel(prompt):
+
+    fullpath = f"{url}:{port}/v1"
+    client = OpenAI(
+        base_url=fullpath,
+        api_key="token-abc123",
+    )
+
+    completion = client.chat.completions.create(
+        model=model_version,
+        messages=[
+            {"role": "user", "content": "Hello!"}
+        ]
+    )
+
+    print(completion.choices[0].message)
+    return completion.choices[0].message
+
 def handler(event):
     input = event["input"]
     instruction = input.get("instruction")
     seconds = input.get("seconds", 0)
-    print("port: ",port)
-    # Placeholder for a task; replace with image or text generation logic as needed
-    time.sleep(seconds)
-    if instruction == "GET":
-        result = sendGetRequest()
-        return result
 
-    if instruction == "POST":
-        result = sendPostRequest()
-        return result
+
+    result = queryModel("Hello, how are you?")
+    return result
+
 
     result = instruction.replace(instruction.split()[0], "created", 1)
     return result
@@ -63,3 +78,4 @@ def handler(event):
 
 if __name__ == "__main__":
     runpod.serverless.start({"handler": handler})
+
